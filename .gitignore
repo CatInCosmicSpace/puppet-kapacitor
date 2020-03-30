@@ -28,6 +28,6 @@
 /Puppetfile
 /Vagrantfile
 /scripts/
-/chronograf.pp
+/kapacitor.pp
 /*.log
 /modules/
