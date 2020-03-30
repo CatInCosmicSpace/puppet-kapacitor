@@ -21,12 +21,12 @@ class kapacitor::service (
     hasstatus  => $service_has_status,
     hasrestart => $service_has_restart,
     provider   => $service_provider,
-    subscribe  => [
-      Concat["${configuration_path}/${configuration_file}"],
-      File[$service_definition],
-      File[$service_defaults],
-      Package[$package],
-    ]
+    # subscribe  => [
+    #   File["${configuration_path}/${configuration_file}"],
+    #   File[$service_definition],
+    #   File[$service_defaults],
+    #   Package[$package],
+    # ]
   }
 }
 
