@@ -1,0 +1,17 @@
+---
+# - GPG key resource and resource-----------------------------------------------
+kapacitor::key_resource: ''
+kapacitor::resource: 'yumrepo'
+kapacitor::repos_location: 'https://repos.influxdata.com/rhel/%{::os.release.major}/%{::os.architecture}/stable'
+
+kapacitor::service_definition: '/etc/systemd/system/kapacitor.service'
+
+# - YUM repository settings ----------------------------------------------------
+kapacitor::repositories:
+  "%{lookup('kapacitor::software')}":
+    ensure: "%{lookup('kapacitor::repos_manage')}"
+    enabled: "%{lookup('kapacitor::repos_enable')}"
+    descr: "%{lookup('kapacitor::repos_comment')}"
+    baseurl: "%{lookup('kapacitor::repos_location')}"
+    gpgcheck: "%{lookup('kapacitor::repos_gpgcheck')}"
+    gpgkey: "%{lookup('kapacitor::gpg_source')}"

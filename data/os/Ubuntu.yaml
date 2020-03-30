@@ -1,0 +1,25 @@
+---
+# - GPG key resource and resource-----------------------------------------------
+kapacitor::key_resource: 'apt::key'
+kapacitor::resource: 'apt::source'
+kapacitor::repos_location: 'https://repos.influxdata.com/ubuntu'
+
+# - APT gpg key ----------------------------------------------------------------
+kapacitor::gpg_keys:
+  "%{lookup('kapacitor::software')}":
+    ensure: "%{lookup('kapacitor::gpg_manage')}"
+    id: "%{lookup('kapacitor::gpg_id')}"
+    server: "%{lookup('kapacitor::gpg_server')}"
+    source: "%{lookup('kapacitor::gpg_source')}"
+
+# - APT repository settings ----------------------------------------------------
+kapacitor::repositories:
+  "%{lookup('kapacitor::software')}":
+    ensure: "%{lookup('kapacitor::repos_manage')}"
+    comment: "%{lookup('kapacitor::repos_comment')}"
+    location: "%{lookup('kapacitor::repos_location')}"
+    release: '%{::os.distro.codename}'
+    repos: "%{lookup('kapacitor::repos')}"
+    include:
+      src: "%{lookup('kapacitor::repos_src')}"
+      deb: "%{lookup('kapacitor::repos_bin')}"
