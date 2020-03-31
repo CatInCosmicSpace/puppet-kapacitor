@@ -64,16 +64,4 @@ class kapacitor (
 
   Class['kapacitor::repo'] ~> Class['kapacitor::install']
   Class['kapacitor::install'] ~> Class['kapacitor::config', 'kapacitor::service']
-
-  $settings = {
-    'influxdb' => [{
-      'enabled'  => true,
-      'default'  => true,
-      'name'     => 'localhost',
-      'urls'     => [ 'http://localhost:8086' ],
-      'username' => '',
-      'password' => '',
-      'timeout'  => 0,
-    }]
-  }
 }
