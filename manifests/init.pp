@@ -53,17 +53,8 @@ class kapacitor (
   Boolean $service_has_status = true,
   Boolean $service_has_restart = true,
 
-  Hash $settings = {
-    'influxdb' => [{
-      'enabled'  => true,
-      'default'  => true,
-      'name'     => 'localhost',
-      'urls'     => [ 'http://localhost:8086' ],
-      'username' => '',
-      'password' => '',
-      'timeout'  => 0,
-    }]
-  },
+  Hash $settings = {},
+
 ){
 
   include ::kapacitor::repo
@@ -74,4 +65,15 @@ class kapacitor (
   Class['kapacitor::repo'] ~> Class['kapacitor::install']
   Class['kapacitor::install'] ~> Class['kapacitor::config', 'kapacitor::service']
 
+  $settings = {
+    'influxdb' => [{
+      'enabled'  => true,
+      'default'  => true,
+      'name'     => 'localhost',
+      'urls'     => [ 'http://localhost:8086' ],
+      'username' => '',
+      'password' => '',
+      'timeout'  => 0,
+    }]
+  }
 }

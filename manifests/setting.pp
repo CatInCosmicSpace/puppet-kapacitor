@@ -9,8 +9,10 @@ define kapacitor::setting (
   Optional[Array] $options = undef,
 ) {
 
-  file {"${kapacitor::config_folder}/${title}.conf":
-    content => inline_template("<%= require 'toml-rb'; TomlRB.dump({'settings'=>{'${plugin_type}'=>@settings}}) %>"),
+  include kapacitor
+
+  file {"${kapacitor::configuration_path}/${kapacitor::configuration_file}.conf":
+    content => inline_template("<%= require 'toml-rb'; TomlRB.dump({'settings'=>{'${plugin_type}'=>@options}}) %>"),
     require => Class['kapacitor::config'],
     notify  => Class['kapacitor::service'],
   }
