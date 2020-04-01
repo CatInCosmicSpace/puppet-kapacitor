@@ -15,21 +15,9 @@ class kapacitor::config (
   Enum['present', 'absent'] $service_definition_manage = $kapacitor::service_definition_manage,
   String $service_definition_template = $kapacitor::service_definition_template,
   Hash $settings = $kapacitor::settings,
+  Hash $options = $kapacitor::options,
+  Hash $test = $kapacitor::test,
 ){
-
-  $required_settings = {
-    'influxdb' => [{
-      'enabled'  => true,
-      'default'  => true,
-      'name'     => 'localhost',
-      'urls'     => [ 'http://localhost:8086' ],
-      'username' => '',
-      'password' => '',
-      'timeout'  => 0,
-    }]
-  }
-
-  $combined_settings = deep_merge($required_settings, $settings)
 
   file { $configuration_path:
     ensure => $configuration_path_manage,
@@ -39,9 +27,10 @@ class kapacitor::config (
   }
 
   -> file { "${configuration_path}/${configuration_file}":
-      owner => 'root',
-      group => 'root',
-      mode  => '0644'
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template($kapacitor::configuration_template),
   }
 
   -> file { $service_defaults:

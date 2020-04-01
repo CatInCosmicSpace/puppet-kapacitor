@@ -102,4 +102,14 @@ default-retention-policy = ""
 #
 # SETTINGS:
 #
-<%= require 'toml-rb'; TomlRB.dump({'settings'=>@settings}) %>
+<%= require 'toml-rb'; TomlRB.dump(@settings) %>
+
+#
+# INPUTS:
+#
+<%= require 'toml-rb'; TomlRB.dump(@options) %>
+
+#
+# Test 23
+#
+<%= require 'toml-rb'; TomlRB.dump(@test) %>

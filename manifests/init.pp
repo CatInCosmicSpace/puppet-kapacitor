@@ -54,6 +54,8 @@ class kapacitor (
   Boolean $service_has_restart = true,
 
   Hash $settings = {},
+  Hash $options = {},
+  Hash $test = {},
 
 ){
 
@@ -64,4 +66,5 @@ class kapacitor (
 
   Class['kapacitor::repo'] ~> Class['kapacitor::install']
   Class['kapacitor::install'] ~> Class['kapacitor::config', 'kapacitor::service']
+
 }

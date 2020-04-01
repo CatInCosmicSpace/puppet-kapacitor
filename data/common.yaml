@@ -49,6 +49,24 @@ kapacitor::service_enable: true
 kapacitor::service_has_status: true
 kapacitor::service_has_restart: true
 
+# configuration template kapacitor.conf.erb
+kapacitor::settings:
+  'influxdb':
+    - default: false
+      enabled: false
+      name: 'localhorst'
+      password: 'a'
+      timeout: 5
+      urls: ['http://localhorst:8086']
+      username: 'b'
+    - default: true
+      enabled: false
+      name: 'localhot'
+      password: 'j'
+      timeout: 8
+      urls: ['http://localhot:8086']
+      username: 'i'
+
 # - Merge behavior settings ----------------------------------------------------
 kapacitor::lookup_options:
   gpg_keys:
@@ -56,4 +74,8 @@ kapacitor::lookup_options:
   repositories:
     merge: deep
   settings:
+    merge: deep
+  options:
+    merge: deep
+  test:
     merge: deep
