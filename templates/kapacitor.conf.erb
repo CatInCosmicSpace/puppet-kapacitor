@@ -20,7 +20,7 @@ default-retention-policy = "<%= @default_retention_policy %>"
   # it serves both as a write endpoint
   # and as the API endpoint for all other
   # Kapacitor calls.
-  bind-address = <%= @bind_address %>
+  bind-address = "<%= @bind_address %>"
   log-enabled = <%= @log_enabled %>
   write-tracing = <%= @write_tracing %>
   pprof-enabled = <%= @pprof_enabled %>
