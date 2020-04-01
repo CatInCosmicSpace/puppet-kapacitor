@@ -50,22 +50,50 @@ kapacitor::service_has_status: true
 kapacitor::service_has_restart: true
 
 # configuration template kapacitor.conf.erb
-kapacitor::settings:
+kapacitor::hostname: 'localhost'
+kapacitor::data_dir: '/var/lib/kapacitor'
+kapacitor::data_dir_manage: 'directory'
+kapacitor::skip_config_overrides: false
+kapacitor::default_retention_policy: ''
+kapacitor::bind_address: ':9092'
+kapacitor::log_enabled: true
+kapacitor::write_tracing: false
+kapacitor::pprof_enabled: false
+kapacitor::https_enabled: false
+kapacitor::https_certificate: '/etc/ssl/kapacitor.pem'
+kapacitor::https_certificate_manage: 'present'
+kapacitor::https_private_key: ''
+kapacitor::config_override_enabled: true
+kapacitor::logging_file: '/var/log/kapacitor/kapacitor.log'
+kapacitor::logging_file_manage: 'present'
+kapacitor::logging_level: 'INFO'
+kapacitor::load_enabled: true
+kapacitor::load_dir: '/etc/kapacitor/load'
+kapacitor::load_dir_manage: 'directory'
+kapacitor::replay_dir: '/var/lib/kapacitor/replay'
+kapacitor::replay_dir_manage: 'directory'
+kapacitor::task_dir: '/var/lib/kapacitor/tasks'
+kapacitor::task_dir_manage: 'directory'
+kapacitor::task_snapshot_interval: '60s'
+kapacitor::storage_boltdb: '/var/lib/kapacitor/kapacitor.db'
+kapacitor::storage_boltdb_manage: 'present'
+
+kapacitor::configuration:
   'influxdb':
-    - default: false
-      enabled: false
-      name: 'localhorst'
-      password: 'a'
-      timeout: 5
-      urls: ['http://localhorst:8086']
-      username: 'b'
     - default: true
-      enabled: false
-      name: 'localhot'
-      password: 'j'
-      timeout: 8
-      urls: ['http://localhot:8086']
-      username: 'i'
+      enabled: true
+      name: 'localhost'
+      password: ''
+      timeout: 0
+      urls: ['http://localhost:8086']
+      username: ''
+  'smtp':
+    enabled: true
+    host: 'localhost'
+    port: 25
+    username: ''
+    password: ''
+    from: ''
 
 # - Merge behavior settings ----------------------------------------------------
 kapacitor::lookup_options:
@@ -73,9 +101,5 @@ kapacitor::lookup_options:
     merge: deep
   repositories:
     merge: deep
-  settings:
-    merge: deep
-  options:
-    merge: deep
-  test:
+  configuration:
     merge: deep
