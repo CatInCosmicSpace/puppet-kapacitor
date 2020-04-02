@@ -88,6 +88,7 @@ class kapacitor (
   include ::kapacitor::repo
   include ::kapacitor::install
   include ::kapacitor::config
+  include ::kapacitor::tick
   contain ::kapacitor::service
 
   Class['kapacitor::repo'] ~> Class['kapacitor::install']
