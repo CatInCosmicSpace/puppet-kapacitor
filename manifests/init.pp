@@ -81,14 +81,47 @@ class kapacitor (
   String $storage_boltdb = '/var/lib/kapacitor/kapacitor.db',
   Enum['present', 'absent'] $storage_boltdb_manage = 'present',
 
-  Hash $configuration = {},
+  Hash $configuration_influxdb = {},
+  Hash $configuration_kubernetes = {},
+  Hash $configuration_smtp = {},
+  Hash $configuration_snmptrap = {},
+  Hash $configuration_opsgenie = {},
+  Hash $configuration_victorops = {},
+  Hash $configuration_pagerduty = {},
+  Hash $configuration_pushover = {},
+  Hash $configuration_httppost = {},
+  Hash $configuration_slack = {},
+  Hash $configuration_telegram = {},
+  Hash $configuration_hipchat = {},
+  Hash $configuration_kafka = {},
+  Hash $configuration_alerta = {},
+  Hash $configuration_sensu = {},
+  Hash $configuration_reporting = {},
+  Hash $configuration_stats = {},
+  Hash $configuration_udf = {},
+  Hash $configuration_talk = {},
+  Hash $configuration_mqtt = {},
+  Hash $configuration_swarm = {},
+  Hash $configuration_collectd = {},
+  Hash $configuration_opentsdb = {},
+  Hash $configuration_scraper = {},
+  Hash $configuration_azure = {},
+  Hash $configuration_consul = {},
+  Hash $configuration_dns = {},
+  Hash $configuration_ec2 = {},
+  Hash $configuration_file_discovery = {},
+  Hash $configuration_gce = {},
+  Hash $configuration_marathon = {},
+  Hash $configuration_nerve = {},
+  Hash $configuration_serverset = {},
+  Hash $configuration_static_discovery = {},
+  Hash $configuration_triton = {},
 
 ){
 
   include ::kapacitor::repo
   include ::kapacitor::install
   include ::kapacitor::config
-  include ::kapacitor::tick
   contain ::kapacitor::service
 
   Class['kapacitor::repo'] ~> Class['kapacitor::install']

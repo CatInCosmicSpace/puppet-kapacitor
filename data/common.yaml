@@ -78,7 +78,7 @@ kapacitor::task_snapshot_interval: '60s'
 kapacitor::storage_boltdb: '/var/lib/kapacitor/kapacitor.db'
 kapacitor::storage_boltdb_manage: 'present'
 
-kapacitor::configuration:
+kapacitor::configuration_influxdb:
   'influxdb':
     - default: true
       enabled: true
@@ -87,6 +87,7 @@ kapacitor::configuration:
       timeout: 0
       urls: ['http://localhost:8086']
       username: ''
+
   'smtp':
     enabled: false
     host: 'localhost'
