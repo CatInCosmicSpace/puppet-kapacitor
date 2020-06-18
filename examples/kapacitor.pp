@@ -11,23 +11,5 @@ class { 'kapacitor':
       'enabled'  => true,
     }],
   },
-
-  configuration_smtp     => {
-      'enabled'  => true,
-      'host'     => 'mail.kogito.network',
-      'port'     => 25,
-      'username' => 'admin@kogito.network',
-      'password' => 'c951iPM7VaAtqAxBpqMAEhwc',
-      'from'     => 'admin@kogito.network',
-      'to'       => ['daniel@kogito.network', 'uwoth@kogito.network',],
-    },
-
-  configuration_stats    => {
-  'enabled'          => true,
-  'stats-interval'   => '10s',
-  'database'         => '_kapacitor',
-  'retention-policy' => 'autogen',
-  },
-
 }
 
