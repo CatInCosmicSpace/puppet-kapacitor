@@ -1,54 +1,4 @@
 ---
-# - Resources ------------------------------------------------------------------
-kapacitor::software: 'influxdata'
-kapacitor::key_resource: ''
-kapacitor::resource: ''
-kapacitor::repos_manage: 'present'
-kapacitor::repos_comment: 'InfluxData repository'
-kapacitor::repos_release: '%{::os.distro.codename}'
-kapacitor::repos: 'stable'
-kapacitor::repos_src: false
-kapacitor::repos_bin: true
-kapacitor::repos_gpgcheck: '1'
-kapacitor::repos_enable: '1'
-kapacitor::manage_repo: true
-
-# - GPG settings ---------------------------------------------------------------
-kapacitor::gpg_manage: 'present'
-kapacitor::gpg_id: '05CE15085FC09D18E99EFB22684A14CF2582E0C5'
-kapacitor::gpg_server: 'eu.pool.sks-keyservers.net'
-kapacitor::gpg_source: 'https://repos.influxdata.com/influxdb.key'
-
-# - Package settings -----------------------------------------------------------
-kapacitor::package: 'kapacitor'
-kapacitor::package_manage: 'present'
-
-# - Kapacitor settings ---------------------------------------------------------
-kapacitor::group: 'kapacitor'
-kapacitor::group_manage: 'present'
-kapacitor::group_system: true
-kapacitor::user: 'kapacitor'
-kapacitor::user_system: true
-kapacitor::user_manage: 'present'
-kapacitor::user_home: '/var/lib/'
-kapacitor::configuration_path: '/etc/kapacitor'
-kapacitor::configuration_path_manage: 'directory'
-kapacitor::configuration_file: 'kapacitor.conf'
-kapacitor::configuration_file_manage: 'present'
-kapacitor::configuration_template: 'kapacitor/kapacitor.conf.erb'
-kapacitor::service_defaults: '/etc/default/kapacitor'
-kapacitor::service_defaults_manage: 'present'
-kapacitor::service_default_template: 'kapacitor/service-defaults.erb'
-kapacitor::service_definition: '/lib/systemd/system/kapacitor.service'
-kapacitor::service_definition_manage: 'present'
-kapacitor::service_name: 'kapacitor'
-kapacitor::service_provider: 'systemd'
-kapacitor::service_manage: 'running'
-kapacitor::service_definition_template: 'kapacitor/systemd.service.erb'
-kapacitor::service_enable: true
-kapacitor::service_has_status: true
-kapacitor::service_has_restart: true
-
 # configuration template kapacitor.conf.erb
 kapacitor::hostname: 'localhost'
 kapacitor::data_dir: '/var/lib/kapacitor'
@@ -78,29 +28,7 @@ kapacitor::task_snapshot_interval: '60s'
 kapacitor::storage_boltdb: '/var/lib/kapacitor/kapacitor.db'
 kapacitor::storage_boltdb_manage: 'present'
 
-kapacitor::configuration_influxdb:
-  'influxdb':
-    - default: true
-      enabled: true
-      name: 'localhost'
-      password: ''
-      timeout: 0
-      urls: ['http://localhost:8086']
-      username: ''
-
-  'smtp':
-    enabled: false
-    host: 'localhost'
-    port: 25
-    username: ''
-    password: ''
-    from: ''
-
 # - Merge behavior settings ----------------------------------------------------
 kapacitor::lookup_options:
-  gpg_keys:
-    merge: deep
-  repositories:
-    merge: deep
   configuration:
     merge: deep

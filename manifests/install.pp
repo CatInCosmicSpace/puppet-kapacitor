@@ -3,8 +3,6 @@
 # @example
 #   include kapacitor::install
 class kapacitor::install (
-  String $package= $kapacitor::package,
-  Enum['present', 'absent'] $package_manage = $kapacitor::package_manage,
   String $group = $kapacitor::group,
   Enum['present', 'absent'] $group_manage = $kapacitor::group_manage,
   Boolean $group_system = $kapacitor::group_system,
@@ -14,9 +12,6 @@ class kapacitor::install (
   Boolean $user_manage_home = $kapacitor::user_manage_home,
   String $user_home = $kapacitor::user_home,
 ){
-  package { $package:
-    ensure => $package_manage
-  }
 
   group { $group:
     ensure => $group_manage,
