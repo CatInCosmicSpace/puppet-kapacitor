@@ -15,14 +15,6 @@ class kapacitor::config (
   Enum['directory', 'absent'] $data_dir_manage = $kapacitor::data_dir_manage,
   Boolean $skip_config_overrides = $kapacitor::skip_config_overrides,
   String $default_retention_policy = $kapacitor::default_retention_policy,
-  String $bind_address = $kapacitor::bind_address,
-  Boolean $log_enabled = $kapacitor::log_enabled,
-  Boolean $write_tracing = $kapacitor::write_tracing,
-  Boolean $pprof_enabled = $kapacitor::pprof_enabled,
-  Boolean $https_enabled = $kapacitor::https_enabled,
-  String $https_certificate = $kapacitor::https_certificate,
-  Enum['present', 'absent'] $https_certificate_manage = $kapacitor::https_certificate_manage,
-  String $https_private_key = $kapacitor::https_private_key,
   Boolean $config_override_enabled = $kapacitor::config_override_enabled,
   String $logging_file = $kapacitor::logging_file,
   Enum['present', 'absent'] $logging_file_manage = $kapacitor::logging_file_manage,
@@ -39,13 +31,18 @@ class kapacitor::config (
   Enum['present', 'absent'] $storage_boltdb_manage = $kapacitor::storage_boltdb_manage,
   String $user = $kapacitor::user,
   String $group = $kapacitor::group,
+  Hash $configuration_http = $kapacitor::configuration_http,
+  Hash $configuration_tls = $kapacitor::configuration_tls,
+  Hash $configuration_deadman = $kapacitor::configuration_deadman,
   Hash $configuration_influxdb = $kapacitor::configuration_influxdb,
   Hash $configuration_kubernetes = $kapacitor::configuration_kubernetes,
   Hash $configuration_smtp = $kapacitor::configuration_smtp,
   Hash $configuration_snmptrap = $kapacitor::configuration_snmptrap,
   Hash $configuration_opsgenie = $kapacitor::configuration_opsgenie,
+  Hash $configuration_opsgenie2 = $kapacitor::configuration_opsgenie2,
   Hash $configuration_victorops = $kapacitor::configuration_victorops,
   Hash $configuration_pagerduty = $kapacitor::configuration_pagerduty,
+  Hash $configuration_pagerduty2 = $kapacitor::configuration_pagerduty2,
   Hash $configuration_pushover = $kapacitor::configuration_pushover,
   Hash $configuration_httppost = $kapacitor::configuration_httppost,
   Hash $configuration_slack = $kapacitor::configuration_slack,
@@ -74,7 +71,11 @@ class kapacitor::config (
   Hash $configuration_serverset = $kapacitor::configuration_serverset,
   Hash $configuration_static_discovery = $kapacitor::configuration_static_discovery,
   Hash $configuration_triton = $kapacitor::configuration_triton,
+
+  Hash $configuration_http_obligatory = $kapacitor::configuration_http_obligatory,
 ){
+
+  $template_http = deep_merge($configuration_http_obligatory, $configuration_http)
 
   file { $configuration_path:
     ensure => directory,
@@ -112,13 +113,6 @@ class kapacitor::config (
       owner  => $user,
       group  => $group,
       mode   => '0755',
-  }
-
-  -> file { $https_certificate:
-      ensure => $https_certificate_manage,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
   }
 
   -> file { $logging_file:
