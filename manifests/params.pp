@@ -95,13 +95,11 @@ class kapacitor::params (
   Hash $configuration_triton = {},
 
   Hash $configuration_http_obligatory = {
-    'log-enabled' => true,
     'bind-address' => ':9092',
     'log-enabled' => true,
     'write-tracing' => false,
     'pprof-enabled' => false,
     'https-enabled' => false,
-    'https-certificate' => '/etc/ssl/kapacitor.pem'
   },
 ){
 
