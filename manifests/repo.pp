@@ -4,7 +4,7 @@
 #   include kapacitor::repo
 class kapacitor::repo (
   Boolean $manage_repo = $kapacitor::manage_repo,
-  String $ensure_package = $kapacitor::ensure_package,
+  String $ensure = $kapacitor::ensure,
   String $package_name = $kapacitor::package_name,
   String $repo_location = $kapacitor::repo_location,
   String $repo_type = $kapacitor::repo_type,
@@ -26,7 +26,7 @@ class kapacitor::repo (
     include apt
     Class['::apt::update'] -> Package[$package_name]
     package { $package_name:
-      ensure => $ensure_package,
+      ensure => $ensure,
     }
   }
 
