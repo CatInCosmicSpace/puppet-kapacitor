@@ -89,7 +89,7 @@ class kapacitor::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => template($kapacitor::configuration_template),
+      content => template($configuration_template),
   }
 
   -> file { $service_defaults:

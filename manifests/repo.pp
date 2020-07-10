@@ -40,8 +40,9 @@ class kapacitor::repo (
         gpgkey   => "${repo_location}influxdb.key",
         gpgcheck => 1,
       }
-
-      Yumrepo['influxdata'] -> Package[$package_name]
+    }
+    package { $package_name:
+      ensure => $ensure,
     }
   }
 }
