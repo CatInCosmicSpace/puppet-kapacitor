@@ -15,16 +15,16 @@ describe 'kapacitor' do
         is_expected.to contain_class('kapacitor::config').that_notifies('Class[kapacitor::service]')
 
         case facts[:os]['name']
-          when 'Debian'
-            is_expected.to have_class_count(9)
-            is_expected.to have_resource_count(30)
-          when 'Ubuntu'
-            is_expected.to have_class_count(9)
-            is_expected.to have_resource_count(29)
-          when 'CentOS'
-            is_expected.to have_class_count(6)
-            is_expected.to have_resource_count(15)
-         end
+        when 'Debian'
+          is_expected.to have_class_count(9)
+          is_expected.to have_resource_count(30)
+        when 'Ubuntu'
+          is_expected.to have_class_count(9)
+          is_expected.to have_resource_count(29)
+        when 'CentOS'
+          is_expected.to have_class_count(6)
+          is_expected.to have_resource_count(15)
+        end
       end
     end
   end

@@ -24,10 +24,8 @@ describe 'kapacitor::repo' do
 
         if facts[:osfamily] == 'Debian'
           is_expected.to contain_class('apt')
-        else
-          if facts[:os]['name'] == 'CentOS'
-            is_expected.to contain_yumrepo('influxdata')
-          end
+        elsif facts[:os]['name'] == 'CentOS'
+          is_expected.to contain_yumrepo('influxdata')
         end
       end
     end
