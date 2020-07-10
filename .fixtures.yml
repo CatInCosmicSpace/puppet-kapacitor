@@ -3,4 +3,18 @@
 ---
 fixtures:
   forge_modules:
-#     stdlib: "puppetlabs/stdlib"
+    apt:
+      repo: "puppetlabs/apt"
+      ref: "6.3.0"
+    stdlib:
+      repo: "puppetlabs/stdlib"
+      ref: "5.2.0"
+    translate:
+      repo: "puppetlabs/translate"
+      ref: "2.1.0"
+    concat:
+      repo: "puppetlabs/concat"
+      ref: "6.2.0"
+    yumrepo_core:
+      repo: "puppetlabs/yumrepo_core"
+      ref: "1.0.6"
