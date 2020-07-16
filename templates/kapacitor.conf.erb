@@ -15,13 +15,13 @@ skip-config-overrides = <%= @skip_config_overrides %>
 # then the retention policy will be set to this value
 default-retention-policy = "<%= @default_retention_policy %>"
 
-#
 [http]
 <%= require 'toml-rb'; TomlRB.dump(@template_http) %>
 
-#
+<% if @configuration_tls != {} %>
 [tls]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_tls) %>
+<% end %>
 
 [config-override]
   # Enable/Disable the service for overridding configuration via the HTTP API.
@@ -60,164 +60,202 @@ default-retention-policy = "<%= @default_retention_policy %>"
   # Where to store the Kapacitor boltdb database
   boltdb = "<%= @storage_boltdb %>"
 
-#
+<% if @configuration_deadman != {} %>
 [deadman]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_deadman) %>
+<% end %>
 
-#
+<% if @configuration_influxdb != {} %>
 [[influxdb]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_influxdb) %>
+<% end %>
 # [influxdb.subscriptions]
 # [influxdb.excluded-subscriptions]
 
-
-#
+<% if @configuration_kubernetes != {} %>
 [kubernetes]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_kubernetes) %>
+<% end %>
 
-#
+<% if @configuration_smtp != {} %>
 [smtp]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_smtp) %>
+<% end %>
 
-#
+<% if @configuration_snmptrap != {} %>
 [snmptrap]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_snmptrap) %>
+<% end %>
 
-#
+<% if @configuration_opsgenie != {} %>
 [opsgenie]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_opsgenie) %>
+<% end %>
 
-#
+<% if @configuration_opsgenie2 != {} %>
 [opsgenie2]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_opsgenie2) %>
+<% end %>
 
-#
+<% if @configuration_victorops != {} %>
 [victorops]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_victorops) %>
+<% end %>
 
-#
+<% if @configuration_pagerduty != {} %>
 [pagerduty]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_pagerduty) %>
+<% end %>
 
-#
+<% if @configuration_pagerduty2 != {} %>
 [pagerduty2]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_pagerduty2) %>
+<% end %>
 
-#
+<% if @configuration_pushover != {} %>
 [pushover]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_pushover) %>
+<% end %>
 
-#
+<% if @configuration_httppost != {} %>
 [[httppost]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_httppost) %>
+<% end %>
 
-#
+<% if @configuration_slack != {} %>
 [[slack]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_slack) %>
+<% end %>
 
-#
+<% if @configuration_telegram != {} %>
 [telegram]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_telegram) %>
+<% end %>
 
-#
+<% if @configuration_hipchat != {} %>
 [hipchat]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_hipchat) %>
+<% end %>
 
-#
+<% if @configuration_kafka != {} %>
 [[kafka]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_kafka) %>
+<% end %>
 
-#
+<% if @configuration_alerta != {} %>
 [alerta]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_alerta) %>
+<% end %>
 
-#
+<% if @configuration_sensu != {} %>
 [sensu]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_sensu) %>
+<% end %>
 
-#
+<% if @configuration_reporting != {} %>
 [reporting]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_reporting) %>
+<% end %>
 
-#
+<% if @configuration_stats != {} %>
 [stats]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_stats) %>
+<% end %>
 
-#
+<% if @configuration_udf != {} %>
 [udf]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_udf) %>
+<% end %>
 # [udf.functions]
 # [udf.functions.goavg]
 # [udf.functions.pyavg]
 # [udf.functions.pyavg.env]
 # [udf.functions.myCustomUDF]
 
-#
+<% if @configuration_talk != {} %>
 [talk]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_talk) %>
+<% end %>
 
-#
+<% if @configuration_mqtt != {} %>
 [[mqtt]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_mqtt) %>
+<% end %>
 
-#
+<% if @configuration_swarm != {} %>
 [[swarm]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_swarm) %>
+<% end %>
 
 ##################################
 # Input Methods, same as InfluxDB
 
-#
+<% if @configuration_collectd != {} %>
 [collectd]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_collectd) %>
+<% end %>
 
-#
+<% if @configuration_opentsdb != {} %>
 [opentsdb]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_opentsdb) %>
+<% end %>
 
-#
+<% if @configuration_scraper != {} %>
 [[scraper]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_scraper) %>
+<% end %>
 
-#
+<% if @configuration_azure != {} %>
 [[azure]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_azure) %>
+<% end %>
 
-#
+<% if @configuration_consul != {} %>
 [[consul]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_consul) %>
+<% end %>
 
-#
+<% if @configuration_dns != {} %>
 [[dns]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_dns) %>
+<% end %>
 
-#
+<% if @configuration_ec2 != {} %>
 [[ec2]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_ec2) %>
+<% end %>
 
-#
+<% if @configuration_file_discovery != {} %>
 [[file-discovery]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_file_discovery) %>
+<% end %>
 
-#
+<% if @configuration_gce != {} %>
 [[gce]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_gce) %>
+<% end %>
 
-#
+<% if @configuration_marathon != {} %>
 [[marathon]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_marathon) %>
-#
+<% end %>
+
+<% if @configuration_nerve != {} %>
 [[nerve]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_nerve) %>
+<% end %>
 
-#
+<% if @configuration_serverset != {} %>
 [[serverset]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_serverset) %>
+<% end %>
 
-#
+<% if @configuration_static_discovery != {} %>
 [[static-discovery]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_static_discovery) %>
+<% end %>
 
-#
+<% if @configuration_triton != {} %>
 [[triton]]
 <%= require 'toml-rb'; TomlRB.dump(@configuration_triton) %>
+<% end %>
