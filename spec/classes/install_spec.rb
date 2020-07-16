@@ -9,20 +9,19 @@ describe 'kapacitor::install' do
 
       let :params do
         {
-          'group' => 'kapacitor',
-          'group_system' => true,
-          'user' => 'kapacitor',
-          'user_home' => '/var/lib/',
-          'user_manage_home' => true,
-          'user_system' => true,
+          'ensure' => 'present',
+          'package_name' => 'kapacitor',
         }
       end
 
       it do
         is_expected.to compile.with_all_deps
         is_expected.to contain_class('kapacitor::install')
-        is_expected.to contain_group('kapacitor')
-        is_expected.to contain_user('kapacitor')
+        is_expected.to contain_package('kapacitor')
+        case facts[:os]['family']
+        when 'Debian'
+          is_expected.to contain_class('apt')
+        end
       end
     end
   end

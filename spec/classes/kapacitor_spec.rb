@@ -12,18 +12,17 @@ describe 'kapacitor' do
         is_expected.to contain_class('kapacitor')
         is_expected.to contain_class('kapacitor::repo').that_comes_before('Class[kapacitor::install]')
         is_expected.to contain_class('kapacitor::install').that_comes_before(['Class[kapacitor::config]', 'Class[kapacitor::service]'])
-        is_expected.to contain_class('kapacitor::config').that_notifies('Class[kapacitor::service]')
 
         case facts[:os]['name']
         when 'Debian'
-          is_expected.to have_class_count(9)
-          is_expected.to have_resource_count(30)
-        when 'Ubuntu'
-          is_expected.to have_class_count(9)
+          is_expected.to have_class_count(10)
           is_expected.to have_resource_count(29)
+        when 'Ubuntu'
+          is_expected.to have_class_count(10)
+          is_expected.to have_resource_count(28)
         when 'CentOS'
-          is_expected.to have_class_count(6)
-          is_expected.to have_resource_count(15)
+          is_expected.to have_class_count(7)
+          is_expected.to have_resource_count(14)
         end
       end
     end

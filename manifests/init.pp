@@ -6,51 +6,46 @@ class kapacitor (
   Boolean $manage_repo = true,
   String $package_name = $kapacitor::params::package_name,
   String $ensure = $kapacitor::params::ensure,
-  String $repo_location = $kapacitor::params::repo_location,
+  Stdlib::HTTPSUrl $repo_location = $kapacitor::params::repo_location,
   String $repo_type = $kapacitor::params::repo_type,
 
   String $group = $kapacitor::params::group,
-  Boolean $group_system = $kapacitor::params::group_system,
   String $user = $kapacitor::params::user,
-  Boolean $user_system = $kapacitor::params::user_system,
-  Boolean $user_manage_home = $kapacitor::params::user_manage_home,
-  String $user_home = $kapacitor::params::user_home,
 
-  String $configuration_path = $kapacitor::params::configuration_path,
+  Stdlib::Absolutepath $configuration_path = $kapacitor::params::configuration_path,
   String $configuration_file = $kapacitor::params::configuration_file,
   String $configuration_template = $kapacitor::params::configuration_template,
 
-  String $service_defaults = $kapacitor::params::service_defaults,
+  Stdlib::Absolutepath $service_defaults = $kapacitor::params::service_defaults,
   String $service_default_template = $kapacitor::params::service_default_template,
-  String $service_definition = $kapacitor::params::service_definition,
+  Stdlib::Absolutepath $service_definition = $kapacitor::params::service_definition,
   String $service_definition_template = $kapacitor::params::service_definition_template,
   String $service_name = $kapacitor::params::service_name,
   String $service_provider = $kapacitor::params::service_provider,
-  Enum['running', 'stopped'] $service_ensure = $kapacitor::params::service_ensure,
+  Stdlib::Ensure::Service $service_ensure = $kapacitor::params::service_ensure,
   Boolean $service_enable = $kapacitor::params::service_enable,
   Boolean $service_has_status = $kapacitor::params::service_has_status,
   Boolean $service_has_restart = $kapacitor::params::service_has_restart,
   Boolean $manage_service = $kapacitor::params::manage_service,
-  Boolean $notify_service = $kapacitor::params::notify_service,
 
-  String $hostname = $kapacitor::params::hostname,
-  String $data_dir = $kapacitor::params::data_dir,
+  Stdlib::Fqdn $hostname = $kapacitor::params::hostname,
+  Stdlib::Absolutepath $data_dir = $kapacitor::params::data_dir,
   Enum['directory', 'absent'] $data_dir_manage = $kapacitor::params::data_dir_manage,
   Boolean $skip_config_overrides = $kapacitor::params::skip_config_overrides,
   String $default_retention_policy = $kapacitor::params::default_retention_policy,
   Boolean $config_override_enabled = $kapacitor::params::config_override_enabled,
-  String $logging_file = $kapacitor::params::logging_file,
+  Stdlib::Absolutepath $logging_file = $kapacitor::params::logging_file,
   Enum['present', 'absent'] $logging_file_manage = $kapacitor::params::logging_file_manage,
   String $logging_level = $kapacitor::params::logging_level,
   Boolean $load_enabled = $kapacitor::params::load_enabled,
-  String $load_dir = $kapacitor::params::load_dir,
+  Stdlib::Absolutepath $load_dir = $kapacitor::params::load_dir,
   Enum['directory', 'absent'] $load_dir_manage = $kapacitor::params::load_dir_manage,
-  String $replay_dir = $kapacitor::params::replay_dir,
+  Stdlib::Absolutepath $replay_dir = $kapacitor::params::replay_dir,
   Enum['directory', 'absent'] $replay_dir_manage = $kapacitor::params::replay_dir_manage,
-  String $task_dir = $kapacitor::params::task_dir,
+  Stdlib::Absolutepath $task_dir = $kapacitor::params::task_dir,
   Enum['directory', 'absent'] $task_dir_manage = $kapacitor::params::task_dir_manage,
   String $task_snapshot_interval = $kapacitor::params::task_snapshot_interval,
-  String $storage_boltdb = $kapacitor::params::storage_boltdb,
+  Stdlib::Absolutepath $storage_boltdb = $kapacitor::params::storage_boltdb,
   Enum['present', 'absent'] $storage_boltdb_manage = $kapacitor::params::storage_boltdb_manage,
 
   Hash $configuration_http = $kapacitor::params::configuration_http,
@@ -108,8 +103,4 @@ class kapacitor (
   Class['kapacitor::repo'] ~> Class['kapacitor::install']
   Class['kapacitor::install'] ~> Class['kapacitor::config', 'kapacitor::service']
 
-  if $notify_service {
-    Class['kapacitor::config']
-    ~> Class['kapacitor::service']
-  }
 }

@@ -10,8 +10,6 @@ describe 'kapacitor::repo' do
       let :params do
         {
           'manage_repo' => true,
-          'package_name' => 'kapacitor',
-          'ensure' => 'present',
           'repo_location' => 'https://repos.influxdata.com/',
           'repo_type' => 'stable',
         }
@@ -20,11 +18,9 @@ describe 'kapacitor::repo' do
       it do
         is_expected.to compile.with_all_deps
         is_expected.to contain_class('kapacitor::repo')
-        is_expected.to contain_package('kapacitor')
 
-        if facts[:osfamily] == 'Debian'
-          is_expected.to contain_class('apt')
-        elsif facts[:os]['name'] == 'CentOS'
+        case facts[:os]['family']
+        when 'RedHat'
           is_expected.to contain_yumrepo('influxdata')
         end
       end

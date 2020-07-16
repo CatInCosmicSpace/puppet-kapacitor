@@ -98,12 +98,12 @@ describe 'kapacitor::config' do
         is_expected.to contain_file('/var/lib/kapacitor/tasks')
         is_expected.to contain_file('/var/lib/kapacitor/kapacitor.db')
 
-        if facts[:osfamily] == 'Debian'
+        if facts[:os]['family'] == 'Debian'
           is_expected.to contain_file('/lib/systemd/system/kapacitor.service')
         end
       end
 
-      context 'on centos' do
+      context 'on RedHat' do
         let :params do
           {
             'service_definition' => '/etc/systemd/system/kapacitor.service',
@@ -185,7 +185,7 @@ describe 'kapacitor::config' do
         end
 
         it do
-          if facts[:os]['name'] == 'CentOS'
+          if facts[:os]['family'] == 'RedHat'
             is_expected.to contain_file('/etc/systemd/system/kapacitor.service')
           end
         end

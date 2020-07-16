@@ -3,31 +3,31 @@
 # @example
 #   include kapacitor::config
 class kapacitor::config (
-  String $configuration_path = $kapacitor::configuration_path,
+  Stdlib::Absolutepath $configuration_path = $kapacitor::configuration_path,
   String $configuration_file = $kapacitor::configuration_file,
   String $configuration_template= $kapacitor::configuration_template,
-  String $service_defaults = $kapacitor::service_defaults,
+  Stdlib::Absolutepath $service_defaults = $kapacitor::service_defaults,
   String $service_default_template = $kapacitor::service_default_template,
-  String $service_definition = $kapacitor::service_definition,
+  Stdlib::Absolutepath $service_definition = $kapacitor::service_definition,
   String $service_definition_template = $kapacitor::service_definition_template,
-  String $hostname = $kapacitor::hostname,
-  String $data_dir = $kapacitor::data_dir,
+  Stdlib::Fqdn $hostname = $kapacitor::hostname,
+  Stdlib::Absolutepath $data_dir = $kapacitor::data_dir,
   Enum['directory', 'absent'] $data_dir_manage = $kapacitor::data_dir_manage,
   Boolean $skip_config_overrides = $kapacitor::skip_config_overrides,
   String $default_retention_policy = $kapacitor::default_retention_policy,
   Boolean $config_override_enabled = $kapacitor::config_override_enabled,
-  String $logging_file = $kapacitor::logging_file,
+  Stdlib::Absolutepath $logging_file = $kapacitor::logging_file,
   Enum['present', 'absent'] $logging_file_manage = $kapacitor::logging_file_manage,
   String $logging_level = $kapacitor::logging_level,
   Boolean $load_enabled = $kapacitor::load_enabled,
-  String $load_dir = $kapacitor::load_dir,
+  Stdlib::Absolutepath $load_dir = $kapacitor::load_dir,
   Enum['directory', 'absent'] $load_dir_manage = $kapacitor::load_dir_manage,
-  String $replay_dir = $kapacitor::replay_dir,
+  Stdlib::Absolutepath $replay_dir = $kapacitor::replay_dir,
   Enum['directory', 'absent'] $replay_dir_manage = $kapacitor::replay_dir_manage,
-  String $task_dir = $kapacitor::task_dir,
+  Stdlib::Absolutepath $task_dir = $kapacitor::task_dir,
   Enum['directory', 'absent'] $task_dir_manage = $kapacitor::task_dir_manage,
   String $task_snapshot_interval = $kapacitor::task_snapshot_interval,
-  String $storage_boltdb = $kapacitor::storage_boltdb,
+  Stdlib::Absolutepath $storage_boltdb = $kapacitor::storage_boltdb,
   Enum['present', 'absent'] $storage_boltdb_manage = $kapacitor::storage_boltdb_manage,
   String $user = $kapacitor::user,
   String $group = $kapacitor::group,
@@ -75,6 +75,8 @@ class kapacitor::config (
   Hash $configuration_http_obligatory = $kapacitor::configuration_http_obligatory,
 ){
 
+  include systemd::systemctl::daemon_reload
+
   $template_http = deep_merge($configuration_http_obligatory, $configuration_http)
 
   file { $configuration_path:
@@ -107,43 +109,44 @@ class kapacitor::config (
       mode    => '0644',
       content => template($service_definition_template),
   }
+  ~> Class['systemd::systemctl::daemon_reload']
 
-  -> file { $data_dir:
+    file { $data_dir:
       ensure => $data_dir_manage,
       owner  => $user,
       group  => $group,
       mode   => '0755',
   }
 
-  -> file { $logging_file:
+    file { $logging_file:
       ensure => $logging_file_manage,
       owner  => $user,
       group  => $group,
       mode   => '0755',
   }
 
-  -> file { $load_dir:
+    file { $load_dir:
       ensure => $load_dir_manage,
       owner  => 'root',
       group  => 'root',
       mode   => '0755',
   }
 
-  -> file { $replay_dir:
+    file { $replay_dir:
       ensure => $replay_dir_manage,
       owner  => $user,
       group  => $group,
       mode   => '0755',
   }
 
-  -> file { $task_dir:
+    file { $task_dir:
       ensure => $task_dir_manage,
       owner  => $user,
       group  => $group,
       mode   => '0755',
   }
 
-  -> file { $storage_boltdb:
+    file { $storage_boltdb:
       ensure => $storage_boltdb_manage,
       owner  => $user,
       group  => $group,

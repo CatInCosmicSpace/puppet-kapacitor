@@ -3,25 +3,20 @@
 # @example
 #   include kapacitor::install
 class kapacitor::install (
-  String $group = $kapacitor::group,
-  Boolean $group_system = $kapacitor::group_system,
-  String $user = $kapacitor::user,
-  Boolean $user_system = $kapacitor::user_system,
-  Boolean $user_manage_home = $kapacitor::user_manage_home,
-  String $user_home = $kapacitor::user_home,
+  String $ensure = $kapacitor::ensure,
+  String $package_name = $kapacitor::package_name,
 ){
-
-  group { $group:
-    ensure => present,
-    system => $group_system,
+  case $facts['os']['family'] {
+  'Debian': {
+    include apt
+    Class['::apt::update'] -> Package[$package_name]
+  }
+    default: {
+      # do nothing
+    }
   }
 
-  user { $user:
-    ensure     => present,
-    gid        => $group,
-    home       => "${user_home}${user}",
-    managehome => $user_manage_home,
-    system     => $user_system,
-    require    => Group[$group],
-  }
+    package { $package_name:
+      ensure => $ensure,
+    }
 }
