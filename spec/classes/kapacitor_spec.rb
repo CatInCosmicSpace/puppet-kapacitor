@@ -16,7 +16,7 @@ describe 'kapacitor' do
         case facts[:os]['name']
         when 'Debian'
           is_expected.to have_class_count(10)
-          is_expected.to have_resource_count(29)
+          is_expected.to have_resource_count(28)
         when 'Ubuntu'
           is_expected.to have_class_count(10)
           is_expected.to have_resource_count(28)

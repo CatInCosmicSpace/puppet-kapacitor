@@ -87,9 +87,9 @@ For an extensive list of supported operating systems, see `metadata.json`.
 
 ## Development
 
-- pdk-version 1.18.0
-- template-url pdk-default 1.18.0
-- template-ref tags/1.18.0-0-g095317c
+- pdk-version 1.18.1
+- template-url pdk-default 1.18.1
+- template-ref tags/1.18.1-0-g3d2e75c
 
 ## Release Notes/Contributors/Etc.
 
