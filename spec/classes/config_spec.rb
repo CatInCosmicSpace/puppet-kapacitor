@@ -7,6 +7,7 @@ describe 'kapacitor::config' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
+      context 'with all defaults'  do
       let :params do
         {
           'configuration_path' => '/etc/kapacitor',
@@ -35,11 +36,11 @@ describe 'kapacitor::config' do
           'task_dir_manage' => 'directory',
           'task_snapshot_interval' => '60s',
           'storage_boltdb_manage' => 'present',
-          'user' => 'kapacitor',
-          'group' => 'kapacitor',
+          'user' => 'foo',
+          'group' => 'bar',
           'configuration_http' => {},
           'configuration_http_obligatory' => {
-            'bind-address' => ':9092',
+            'bind-address' => ':9999',
             'log-enabled' => true,
             'write-tracing' => false,
             'pprof-enabled' => false,
@@ -65,7 +66,10 @@ describe 'kapacitor::config' do
           'configuration_alerta' => {},
           'configuration_sensu' => {},
           'configuration_reporting' => {},
-          'configuration_stats' => {},
+          'configuration_stats' => {'enabled' => true,
+                                    'stats-interval' => '55s',
+                                    'database' => '_kap',
+                                    'retention-policy' => 'ret_pol'},
           'configuration_udf' => {},
           'configuration_talk' => {},
           'configuration_mqtt' => {},
@@ -90,18 +94,34 @@ describe 'kapacitor::config' do
       it do
         is_expected.to compile.with_all_deps
         is_expected.to contain_file('/etc/kapacitor/kapacitor.conf')
+          .with_content(%r{[http]})
+          .with_content(%r{bind-address = \":9999\"})
+          .with_content(%r{log-enabled = true})
+          .with_content(%r{write-tracing = false})
+          .with_content(%r{pprof-enabled = false})
+          .with_content(%r{https-enabled = false})
+          .with_content(%r{[stats]})
+          .with_content(%r{enabled = true})
+          .with_content(%r{stats-interval = \"55s\"})
+          .with_content(%r{database = \"_kap\"})
+          .with_content(%r{retention-policy = \"ret_pol\"})
         is_expected.to contain_file('/etc/default/kapacitor')
         is_expected.to contain_file('/var/lib/kapacitor')
         is_expected.to contain_file('/var/log/kapacitor/kapacitor.log')
+          .with(owner:'foo', group: 'bar')
         is_expected.to contain_file('/etc/kapacitor/load')
         is_expected.to contain_file('/var/lib/kapacitor/replay')
+          .with(owner:'foo', group: 'bar')
         is_expected.to contain_file('/var/lib/kapacitor/tasks')
+          .with(owner:'foo', group: 'bar')
         is_expected.to contain_file('/var/lib/kapacitor/kapacitor.db')
+          .with(owner:'foo', group: 'bar')
 
         if facts[:os]['family'] == 'Debian'
           is_expected.to contain_file('/lib/systemd/system/kapacitor.service')
         end
       end
+    end
 
       context 'on RedHat' do
         let :params do
@@ -132,8 +152,8 @@ describe 'kapacitor::config' do
             'task_dir_manage' => 'directory',
             'task_snapshot_interval' => '60s',
             'storage_boltdb_manage' => 'present',
-            'user' => 'kapacitor',
-            'group' => 'kapacitor',
+            'user' => 'foo',
+            'group' => 'bar',
             'configuration_http' => {},
             'configuration_http_obligatory' => {
               'bind-address' => ':9092',
