@@ -27,7 +27,7 @@ describe 'kapacitor::repo' do
               'location'   => "https://repos.influxdata.com/#{facts[:os]['name'].downcase}",
               'repos'      => 'stable',
               'key' => { 'id' => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
-                         'source' => 'https://repos.influxdata.com/influxdb.key', }
+                         'source' => 'https://repos.influxdata.com/influxdb.key' },
             )
           when 'RedHat'
             is_expected.to contain_yumrepo('influxdata')

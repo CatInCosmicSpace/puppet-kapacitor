@@ -39,7 +39,8 @@ describe 'kapacitor::install' do
             'package_name' => 'kapacitor',
           }
         end
-       it do
+
+        it do
           is_expected.to compile.with_all_deps
           is_expected.to contain_package('kapacitor')
             .with(ensure: 'absent')

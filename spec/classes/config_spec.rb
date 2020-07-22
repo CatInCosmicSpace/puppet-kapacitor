@@ -7,7 +7,7 @@ describe 'kapacitor::config' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      context 'with all defaults'  do
+      context 'with all defaults' do
         let :params do
           {
             'configuration_path' => '/etc/kapacitor',
@@ -70,7 +70,7 @@ describe 'kapacitor::config' do
               'enabled' => true,
               'stats-interval' => '55s',
               'database' => '_kap',
-              'retention-policy' => 'ret_pol'
+              'retention-policy' => 'ret_pol',
             },
             'configuration_udf' => {},
             'configuration_talk' => {},
@@ -121,10 +121,10 @@ describe 'kapacitor::config' do
 
           if facts[:os]['family'] == 'Debian'
             is_expected.to contain_file('/lib/systemd/system/kapacitor.service')
-            .with_content(%r{User=foo})
-            .with_content(%r{Group=bar})
-            .with_content(%r{EnvironmentFile=-\/etc\/default\/kapacitor})
-            .with_content(%r{ExecStart=\/usr\/bin\/kapacitord -config \/etc\/kapacitor\/kapacitor.conf \$KAPACITOR_OPTS})
+              .with_content(%r{User=foo})
+              .with_content(%r{Group=bar})
+              .with_content(%r{EnvironmentFile=-\/etc\/default\/kapacitor})
+              .with_content(%r{ExecStart=\/usr\/bin\/kapacitord -config \/etc\/kapacitor\/kapacitor.conf \$KAPACITOR_OPTS})
           end
         end
       end
