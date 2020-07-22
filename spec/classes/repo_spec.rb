@@ -33,11 +33,10 @@ describe 'kapacitor::repo' do
             is_expected.to contain_yumrepo('influxdata').with(
               'descr' => 'InfluxData Repository',
               'enabled'  => 1,
-              'baseurl'  => "https://repos.influxdata.com/rhel/7/x86_64/stable",
-              'gpgkey'   => "https://repos.influxdata.com/influxdb.key",
+              'baseurl'  => "https://repos.influxdata.com/rhel/#{facts[:os]['release']['major']}/#{facts[:os]['architecture']}/stable",
+              'gpgkey'   => 'https://repos.influxdata.com/influxdb.key',
               'gpgcheck' => 1,
             )
-
           end
         end
       end
