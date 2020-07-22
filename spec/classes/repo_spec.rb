@@ -7,7 +7,7 @@ describe 'kapacitor::repo' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      context "on manage repo" do
+      context 'manage repo' do
         let :params do
           {
             'manage_repo' => true,
@@ -27,7 +27,7 @@ describe 'kapacitor::repo' do
               'location'   => "https://repos.influxdata.com/#{facts[:os]['name'].downcase}",
               'repos'      => 'stable',
               'key' => { 'id' => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',
-                         'source' => 'https://repos.influxdata.com/influxdb.key'}
+                         'source' => 'https://repos.influxdata.com/influxdb.key', }
             )
           when 'RedHat'
             is_expected.to contain_yumrepo('influxdata')
@@ -35,7 +35,7 @@ describe 'kapacitor::repo' do
         end
       end
 
-      context "on not manage repo" do
+      context 'not manage repo' do
         let :params do
           {
             'manage_repo' => false,
