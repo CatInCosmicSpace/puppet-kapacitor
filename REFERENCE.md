@@ -8,7 +8,7 @@
 
 - [`kapacitor`](#kapacitor): Manages a Kapacitor
 - [`kapacitor::config`](#kapacitorconfig): Manages directories and files; service defaults
-- [`kapacitor::install`](#kapacitorinstall): Manages package, group, and user
+- [`kapacitor::install`](#kapacitorinstall): Manages package
 - [`kapacitor::params`](#kapacitorparams): Parameter definiton
 - [`kapacitor::repo`](#kapacitorrepo): Manages gpg key information and repository, if necessary
 - [`kapacitor::service`](#kapacitorservice): Manages the service
@@ -949,7 +949,7 @@ Default value: `$kapacitor::configuration_http_obligatory`
 
 ### `kapacitor::install`
 
-Manages package, group, and user
+Manages package
 
 #### Examples
 
