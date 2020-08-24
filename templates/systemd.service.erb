@@ -7,11 +7,11 @@ Documentation=https://docs.influxdata.com/kapacitor/
 After=network.target
 
 [Service]
-User=<%= scope.lookupvar("kapacitor::user") %>
-Group=<%= scope.lookupvar("kapacitor::group") %>
+User=<%= @user %>
+Group=<%= @group %>
 LimitNOFILE=65536
-EnvironmentFile=-<%= scope.lookupvar("kapacitor::service_defaults") %>
-ExecStart=/usr/bin/kapacitord -config <%= scope.lookupvar("kapacitor::configuration_path") %>/<%= scope.lookupvar("kapacitor::configuration_file") %> $KAPACITOR_OPTS
+EnvironmentFile=-<%= @service_defaults %>
+ExecStart=/usr/bin/kapacitord -config <%= @configuration_path %>/<%= @configuration_file %> $KAPACITOR_OPTS
 KillMode=process
 Restart=on-failure
 

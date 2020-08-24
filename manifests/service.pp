@@ -4,29 +4,24 @@
 #   include kapacitor::service
 class kapacitor::service (
   String $service_name = $kapacitor::service_name,
-  Enum['running', 'absent'] $service_manage = $kapacitor::service_manage,
+  Stdlib::Ensure::Service $service_ensure = $kapacitor::service_ensure,
   Boolean $service_enable = $kapacitor::service_enable,
   Boolean $service_has_status = $kapacitor::service_has_status,
   Boolean $service_has_restart = $kapacitor::service_has_restart,
   String $service_provider = $kapacitor::service_provider,
-  String $service_definition = $kapacitor::service_definition,
-  String $service_defaults = $kapacitor::service_defaults,
-  String $configuration_path = $kapacitor::configuration_path,
-  String $configuration_file = $kapacitor::configuration_file,
-  String $package = $kapacitor::package,
+  Boolean $manage_service = $kapacitor::manage_service,
+  Stdlib::Absolutepath $service_definition = $kapacitor::service_definition,
 ){
-  service { $service_name:
-    ensure     => $service_manage,
-    enable     => $service_enable,
-    hasstatus  => $service_has_status,
-    hasrestart => $service_has_restart,
-    provider   => $service_provider,
-    subscribe  => [
-      File["${configuration_path}/${configuration_file}"],
-      File[$service_definition],
-      File[$service_defaults],
-      Package[$package],
-    ]
+  if $manage_service {
+    service { $service_name:
+      ensure     => $service_ensure,
+      enable     => $service_enable,
+      hasstatus  => $service_has_status,
+      hasrestart => $service_has_restart,
+      provider   => $service_provider,
+      subscribe  => [ File[$service_definition],
+                    ]
+
+    }
   }
 }
-
