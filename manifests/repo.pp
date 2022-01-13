@@ -3,10 +3,10 @@
 # @example
 #   include kapacitor::repo
 class kapacitor::repo (
-  Boolean $manage_repo            = $kapacitor::manage_repo,
+  Boolean $manage_repo = $kapacitor::manage_repo,
   Stdlib::HTTPSUrl $repo_location = $kapacitor::repo_location,
-  String $repo_type               = $kapacitor::repo_type,
-) {
+  String $repo_type = $kapacitor::repo_type,
+){
 
   case $facts['os']['family'] {
     'Debian': {
