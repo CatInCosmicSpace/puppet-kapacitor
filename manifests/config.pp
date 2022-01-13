@@ -6,14 +6,21 @@ class kapacitor::config inherits kapacitor {
   $template_http = deep_merge($configuration_http_obligatory, $configuration_http)
 
   file { $configuration_path:
-    ensure => directory,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => 'directory'
+    },
+    force  => true,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
   }
 
   -> file { "${configuration_path}/${configuration_file}":
-    ensure  => present,
+    ensure  => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => 'present'
+    },
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -21,7 +28,10 @@ class kapacitor::config inherits kapacitor {
   }
 
   -> file { $service_defaults:
-    ensure  => present,
+    ensure  => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => 'present'
+    },
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -29,7 +39,10 @@ class kapacitor::config inherits kapacitor {
   }
 
   -> file { $service_definition:
-    ensure  => present,
+    ensure  => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => 'present'
+    },
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -37,42 +50,64 @@ class kapacitor::config inherits kapacitor {
   }
 
   file { $data_dir:
-    ensure => $data_dir_manage,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => $data_dir_manage
+    },
+    force  => true,
     owner  => $user,
     group  => $group,
     mode   => '0755',
   }
 
   file { $logging_file:
-    ensure => $logging_file_manage,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => $logging_file_manage
+    },
     owner  => $user,
     group  => $group,
     mode   => '0755',
   }
 
   file { $load_dir:
-    ensure => $load_dir_manage,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => $load_dir_manage
+    },
+    force  => true,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
   }
 
   file { $replay_dir:
-    ensure => $replay_dir_manage,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => $replay_dir_manage
+    },
+    force  => true,
     owner  => $user,
     group  => $group,
     mode   => '0755',
   }
 
   file { $task_dir:
-    ensure => $task_dir_manage,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => $task_dir_manage
+    },
+    force  => true,
     owner  => $user,
     group  => $group,
     mode   => '0755',
   }
 
   file { $storage_boltdb:
-    ensure => $storage_boltdb_manage,
+    ensure => $kapacitor::ensure ? {
+      'absent' => 'absent',
+      default  => $storage_boltdb_manage
+    },
     owner  => $user,
     group  => $group,
     mode   => '0755',
