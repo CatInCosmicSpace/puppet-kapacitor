@@ -29,22 +29,29 @@ class kapacitor::params (
   Boolean $manage_service                          = true,
 
   Stdlib::Fqdn $hostname                           = 'localhost',
+
   Stdlib::Absolutepath $data_dir                   = '/var/lib/kapacitor',
   Enum['directory', 'absent'] $data_dir_manage     = 'directory',
+
   Boolean $skip_config_overrides                   = false,
   String $default_retention_policy                 = '',
   Boolean $config_override_enabled                 = true,
+
   Stdlib::Absolutepath $logging_file               = '/var/log/kapacitor/kapacitor.log',
   Enum['present', 'absent'] $logging_file_manage   = 'present',
   String $logging_level                            = 'INFO',
+
   Boolean $load_enabled                            = true,
   Stdlib::Absolutepath $load_dir                   = '/etc/kapacitor/load',
   Enum['directory', 'absent'] $load_dir_manage     = 'directory',
+
   Stdlib::Absolutepath $replay_dir                 = '/var/lib/kapacitor/replay',
   Enum['directory', 'absent'] $replay_dir_manage   = 'directory',
+
   Stdlib::Absolutepath $task_dir                   = '/var/lib/kapacitor/tasks',
   Enum['directory', 'absent'] $task_dir_manage     = 'directory',
   String $task_snapshot_interval                   = '60s',
+
   Stdlib::Absolutepath $storage_boltdb             = '/var/lib/kapacitor/kapacitor.db',
   Enum['present', 'absent'] $storage_boltdb_manage = 'present',
 

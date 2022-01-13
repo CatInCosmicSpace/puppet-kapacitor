@@ -29,22 +29,29 @@ class kapacitor (
   Boolean $manage_service                          = $kapacitor::params::manage_service,
 
   Stdlib::Fqdn $hostname                           = $kapacitor::params::hostname,
+
   Stdlib::Absolutepath $data_dir                   = $kapacitor::params::data_dir,
   Enum['directory', 'absent'] $data_dir_manage     = $kapacitor::params::data_dir_manage,
+
   Boolean $skip_config_overrides                   = $kapacitor::params::skip_config_overrides,
   String $default_retention_policy                 = $kapacitor::params::default_retention_policy,
   Boolean $config_override_enabled                 = $kapacitor::params::config_override_enabled,
+
   Stdlib::Absolutepath $logging_file               = $kapacitor::params::logging_file,
   Enum['present', 'absent'] $logging_file_manage   = $kapacitor::params::logging_file_manage,
   String $logging_level                            = $kapacitor::params::logging_level,
+
   Boolean $load_enabled                            = $kapacitor::params::load_enabled,
   Stdlib::Absolutepath $load_dir                   = $kapacitor::params::load_dir,
   Enum['directory', 'absent'] $load_dir_manage     = $kapacitor::params::load_dir_manage,
+
   Stdlib::Absolutepath $replay_dir                 = $kapacitor::params::replay_dir,
   Enum['directory', 'absent'] $replay_dir_manage   = $kapacitor::params::replay_dir_manage,
+
   Stdlib::Absolutepath $task_dir                   = $kapacitor::params::task_dir,
   Enum['directory', 'absent'] $task_dir_manage     = $kapacitor::params::task_dir_manage,
   String $task_snapshot_interval                   = $kapacitor::params::task_snapshot_interval,
+
   Stdlib::Absolutepath $storage_boltdb             = $kapacitor::params::storage_boltdb,
   Enum['present', 'absent'] $storage_boltdb_manage = $kapacitor::params::storage_boltdb_manage,
 
