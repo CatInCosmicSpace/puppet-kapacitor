@@ -12,7 +12,6 @@ describe 'kapacitor' do
         is_expected.to contain_class('kapacitor')
         is_expected.to contain_class('kapacitor::repo').that_comes_before('Class[kapacitor::install]')
         is_expected.to contain_class('kapacitor::install').that_comes_before(['Class[kapacitor::config]', 'Class[kapacitor::service]'])
-
       end
     end
   end

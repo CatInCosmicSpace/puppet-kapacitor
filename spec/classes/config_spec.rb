@@ -10,6 +10,7 @@ describe 'kapacitor::config' do
       context 'with all defaults' do
         let :params do
           {
+            'config_ensure' => 'present',
             'configuration_path' => '/etc/kapacitor',
             'configuration_file' => 'kapacitor.conf',
             'configuration_template' => 'kapacitor/kapacitor.conf.erb',
@@ -132,6 +133,7 @@ describe 'kapacitor::config' do
       context 'on RedHat' do
         let :params do
           {
+            'config_ensure' => 'present',
             'service_definition' => '/etc/systemd/system/kapacitor.service',
             'configuration_path' => '/etc/kapacitor',
             'configuration_file' => 'kapacitor.conf',

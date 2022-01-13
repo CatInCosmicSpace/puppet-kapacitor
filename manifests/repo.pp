@@ -14,7 +14,7 @@ class kapacitor::repo (
         apt::source { 'influxdata':
           comment  => 'InfluxData repository',
           location => "${repo_location}${facts['os']['name'].downcase}",
-          release  => $facts[os][distro][codename],
+          release  => $facts['os']['distro']['codename'],
           repos    => $repo_type,
           key      => {
             'id'     => '05CE15085FC09D18E99EFB22684A14CF2582E0C5',

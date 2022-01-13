@@ -1,3 +1,6 @@
 {
-  "recommendations": ["puppet.puppet-vscode", "rebornix.Ruby"]
+  "recommendations": [
+    "puppet.puppet-vscode",
+    "rebornix.Ruby"
+  ]
 }
