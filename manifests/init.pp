@@ -15,6 +15,7 @@ class kapacitor (
   Stdlib::Absolutepath $configuration_path = $kapacitor::params::configuration_path,
   String $configuration_file = $kapacitor::params::configuration_file,
   String $configuration_template = $kapacitor::params::configuration_template,
+  Boolean $config_ensure = $kapacitor::params::config_ensure,
 
   Stdlib::Absolutepath $service_defaults = $kapacitor::params::service_defaults,
   String $service_default_template = $kapacitor::params::service_default_template,

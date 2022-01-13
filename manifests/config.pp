@@ -3,6 +3,7 @@
 # @example
 #   include kapacitor::config
 class kapacitor::config (
+  String $config_ensure = $kapacitor::config_ensure,
   Stdlib::Absolutepath $configuration_path = $kapacitor::configuration_path,
   String $configuration_file = $kapacitor::configuration_file,
   String $configuration_template= $kapacitor::configuration_template,
@@ -76,11 +77,18 @@ class kapacitor::config (
 ) {
   $template_http = deep_merge($configuration_http_obligatory, $configuration_http)
 
+  $directory_ensure = $config_ensure ? {
+    'absent' => 'absent',
+    default  => 'directory'
+  }
+
+  $file_ensure = $config_ensure ? {
+    'absent' => 'absent',
+    default  => 'present'
+  }
+
   file { $configuration_path:
-    ensure => $kapacitor::ensure ? {
-      'absent' => 'absent',
-      default  => 'directory'
-    },
+    ensure => $directory_ensure,
     force  => true,
     owner  => 'root',
     group  => 'root',
@@ -88,10 +96,7 @@ class kapacitor::config (
   }
 
   -> file { "${configuration_path}/${configuration_file}":
-    ensure  => $kapacitor::ensure ? {
-      'absent' => 'absent',
-      default  => 'present'
-    },
+    ensure  => $file_ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -99,10 +104,7 @@ class kapacitor::config (
   }
 
   -> file { $service_defaults:
-    ensure  => $kapacitor::ensure ? {
-      'absent' => 'absent',
-      default  => 'present'
-    },
+    ensure  => $file_ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -110,7 +112,7 @@ class kapacitor::config (
   }
 
   -> file { $service_definition:
-    ensure  => $kapacitor::ensure ? {
+    ensure  => $config_ensure ? {
       'absent' => 'absent',
       default  => 'present'
     },
@@ -121,7 +123,7 @@ class kapacitor::config (
   }
 
   file { $data_dir:
-    ensure => $kapacitor::ensure ? {
+    ensure => $config_ensure ? {
       'absent' => 'absent',
       default  => $data_dir_manage
     },
@@ -132,7 +134,7 @@ class kapacitor::config (
   }
 
   file { $logging_file:
-    ensure => $kapacitor::ensure ? {
+    ensure => $config_ensure ? {
       'absent' => 'absent',
       default  => $logging_file_manage
     },
@@ -142,7 +144,7 @@ class kapacitor::config (
   }
 
   file { $load_dir:
-    ensure => $kapacitor::ensure ? {
+    ensure => $config_ensure ? {
       'absent' => 'absent',
       default  => $load_dir_manage
     },
@@ -153,7 +155,7 @@ class kapacitor::config (
   }
 
   file { $replay_dir:
-    ensure => $kapacitor::ensure ? {
+    ensure => $config_ensure ? {
       'absent' => 'absent',
       default  => $replay_dir_manage
     },
@@ -164,7 +166,7 @@ class kapacitor::config (
   }
 
   file { $task_dir:
-    ensure => $kapacitor::ensure ? {
+    ensure => $config_ensure ? {
       'absent' => 'absent',
       default  => $task_dir_manage
     },
@@ -175,7 +177,7 @@ class kapacitor::config (
   }
 
   file { $storage_boltdb:
-    ensure => $kapacitor::ensure ? {
+    ensure => $config_ensure ? {
       'absent' => 'absent',
       default  => $storage_boltdb_manage
     },

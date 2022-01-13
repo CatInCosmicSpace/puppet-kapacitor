@@ -15,6 +15,7 @@ class kapacitor::params (
   Stdlib::Absolutepath $configuration_path = '/etc/kapacitor',
   String $configuration_file = 'kapacitor.conf',
   String $configuration_template = 'kapacitor/kapacitor.conf.erb',
+  String $config_ensure = 'present',
 
   Stdlib::Absolutepath $service_defaults = '/etc/default/kapacitor',
   String $service_default_template = 'kapacitor/service-defaults.erb',
