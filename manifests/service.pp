@@ -12,7 +12,7 @@ class kapacitor::service (
   Boolean $manage_service                  = $kapacitor::manage_service,
   Stdlib::Absolutepath $service_definition = $kapacitor::service_definition,
 ) {
-  if $manage_service {
+  if $manage_service and $kapacitor::ensure != 'absent' {
     service { $service_name:
       ensure     => $service_ensure,
       enable     => $service_enable,
