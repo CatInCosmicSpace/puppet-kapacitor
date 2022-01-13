@@ -3,7 +3,7 @@
 # @example
 #   include kapacitor::install
 class kapacitor::install (
-  String $ensure       = $kapacitor::ensure,
+  String $ensure = $kapacitor::ensure,
   String $package_name = $kapacitor::package_name,
 ) {
   case $facts['os']['family'] {
