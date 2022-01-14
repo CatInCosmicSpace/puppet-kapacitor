@@ -8,7 +8,10 @@ class kapacitor::service (
     'absent' => 'stopped',
     default  => $kapacitor::service_ensure
   },
-  Boolean $service_enable = $kapacitor::service_enable,
+  Boolean $service_enable = $kapacitor::ensure ? {
+    'absent' => false,
+    default  => $kapacitor::service_enable
+  },
   Boolean $service_has_status = $kapacitor::service_has_status,
   Boolean $service_has_restart = $kapacitor::service_has_restart,
   String $service_provider = $kapacitor::service_provider,
