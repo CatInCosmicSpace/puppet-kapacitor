@@ -5,7 +5,7 @@
 class kapacitor::service (
   String $service_name = $kapacitor::service_name,
   Stdlib::Ensure::Service $service_ensure = $kapacitor::ensure ? {
-    'absent' => 'absent',
+    'absent' => 'stopped',
     default  => $kapacitor::service_ensure
   },
   Boolean $service_enable = $kapacitor::service_enable,
