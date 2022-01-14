@@ -14,7 +14,7 @@ class kapacitor::service (
   String $service_provider = $kapacitor::service_provider,
   Boolean $manage_service = $kapacitor::manage_service,
   Stdlib::Absolutepath $service_definition = $kapacitor::service_definition,
-) {
+){
   if $manage_service {
     service { $service_name:
       ensure     => $service_ensure,
@@ -22,7 +22,9 @@ class kapacitor::service (
       hasstatus  => $service_has_status,
       hasrestart => $service_has_restart,
       provider   => $service_provider,
-      subscribe  => [ File[$service_definition], ]
+      subscribe  => [ File[$service_definition],
+      ]
+
     }
   }
 }
