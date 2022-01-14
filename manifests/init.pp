@@ -94,14 +94,14 @@ class kapacitor (
 
 )
   inherits kapacitor::params
-  {
+{
 
-    include ::kapacitor::repo
-    include ::kapacitor::install
-    include ::kapacitor::config
-    contain ::kapacitor::service
+  include ::kapacitor::repo
+  include ::kapacitor::install
+  include ::kapacitor::config
+  contain ::kapacitor::service
 
-    Class['kapacitor::repo'] ~> Class['kapacitor::install']
-    Class['kapacitor::install'] ~> Class['kapacitor::config', 'kapacitor::service']
+  Class['kapacitor::repo'] ~> Class['kapacitor::install']
+  Class['kapacitor::install'] ~> Class['kapacitor::config', 'kapacitor::service']
 
-  }
+}
