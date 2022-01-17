@@ -3,6 +3,7 @@
 # @example
 #   include kapacitor::config
 class kapacitor::config (
+  String $config_ensure = $kapacitor::config_ensure,
   Stdlib::Absolutepath $configuration_path = $kapacitor::configuration_path,
   String $configuration_file = $kapacitor::configuration_file,
   String $configuration_template= $kapacitor::configuration_template,
@@ -73,80 +74,115 @@ class kapacitor::config (
   Hash $configuration_triton = $kapacitor::configuration_triton,
 
   Hash $configuration_http_obligatory = $kapacitor::configuration_http_obligatory,
-){
-
+) {
   $template_http = deep_merge($configuration_http_obligatory, $configuration_http)
 
+  $directory_ensure = $config_ensure ? {
+    'absent' => 'absent',
+    default  => 'directory'
+  }
+
+  $file_ensure = $config_ensure ? {
+    'absent' => 'absent',
+    default  => 'present'
+  }
+
   file { $configuration_path:
-    ensure => directory,
+    ensure => $directory_ensure,
+    force  => true,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
   }
 
   -> file { "${configuration_path}/${configuration_file}":
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template($configuration_template),
+    ensure  => $file_ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template($configuration_template),
   }
 
   -> file { $service_defaults:
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template($service_default_template),
+    ensure  => $file_ensure,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template($service_default_template),
   }
 
   -> file { $service_definition:
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      content => template($service_definition_template),
+    ensure  => $config_ensure ? {
+      'absent' => 'absent',
+      default  => 'present'
+    },
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template($service_definition_template),
   }
 
-    file { $data_dir:
-      ensure => $data_dir_manage,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
+  file { $data_dir:
+    ensure => $config_ensure ? {
+      'absent' => 'absent',
+      default  => $data_dir_manage
+    },
+    force  => true,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
-    file { $logging_file:
-      ensure => $logging_file_manage,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
+  file { $logging_file:
+    ensure => $config_ensure ? {
+      'absent' => 'absent',
+      default  => $logging_file_manage
+    },
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
-    file { $load_dir:
-      ensure => $load_dir_manage,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755',
+  file { $load_dir:
+    ensure => $config_ensure ? {
+      'absent' => 'absent',
+      default  => $load_dir_manage
+    },
+    force  => true,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
-    file { $replay_dir:
-      ensure => $replay_dir_manage,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
+  file { $replay_dir:
+    ensure => $config_ensure ? {
+      'absent' => 'absent',
+      default  => $replay_dir_manage
+    },
+    force  => true,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
-    file { $task_dir:
-      ensure => $task_dir_manage,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
+  file { $task_dir:
+    ensure => $config_ensure ? {
+      'absent' => 'absent',
+      default  => $task_dir_manage
+    },
+    force  => true,
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 
-    file { $storage_boltdb:
-      ensure => $storage_boltdb_manage,
-      owner  => $user,
-      group  => $group,
-      mode   => '0755',
+  file { $storage_boltdb:
+    ensure => $config_ensure ? {
+      'absent' => 'absent',
+      default  => $storage_boltdb_manage
+    },
+    owner  => $user,
+    group  => $group,
+    mode   => '0755',
   }
 }
