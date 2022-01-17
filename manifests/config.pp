@@ -13,23 +13,41 @@ class kapacitor::config (
   String $service_definition_template = $kapacitor::service_definition_template,
   Stdlib::Fqdn $hostname = $kapacitor::hostname,
   Stdlib::Absolutepath $data_dir = $kapacitor::data_dir,
-  Enum['directory', 'absent'] $data_dir_manage = $kapacitor::data_dir_manage,
+  Enum['directory', 'absent'] $data_dir_manage = $kapacitor::config_ensure ? {
+    'absent' => 'absent',
+    default  => $kapacitor::data_dir_manage
+  },
   Boolean $skip_config_overrides = $kapacitor::skip_config_overrides,
   String $default_retention_policy = $kapacitor::default_retention_policy,
   Boolean $config_override_enabled = $kapacitor::config_override_enabled,
   Stdlib::Absolutepath $logging_file = $kapacitor::logging_file,
-  Enum['present', 'absent'] $logging_file_manage = $kapacitor::logging_file_manage,
+  Enum['present', 'absent'] $logging_file_manage = $kapacitor::config_ensure ? {
+    'absent' => 'absent',
+    default  => $kapacitor::logging_file_manage,
+  },
   String $logging_level = $kapacitor::logging_level,
   Boolean $load_enabled = $kapacitor::load_enabled,
   Stdlib::Absolutepath $load_dir = $kapacitor::load_dir,
-  Enum['directory', 'absent'] $load_dir_manage = $kapacitor::load_dir_manage,
+  Enum['directory', 'absent'] $load_dir_manage = $kapacitor::config_ensure ? {
+    'absent' => 'absent',
+    default  => $kapacitor::load_dir_manage,
+  },
   Stdlib::Absolutepath $replay_dir = $kapacitor::replay_dir,
-  Enum['directory', 'absent'] $replay_dir_manage = $kapacitor::replay_dir_manage,
+  Enum['directory', 'absent'] $replay_dir_manage = $kapacitor::config_ensure ? {
+    'absent' => 'absent',
+    default  => $kapacitor::replay_dir_manage,
+  },
   Stdlib::Absolutepath $task_dir = $kapacitor::task_dir,
-  Enum['directory', 'absent'] $task_dir_manage = $kapacitor::task_dir_manage,
+  Enum['directory', 'absent'] $task_dir_manage = $kapacitor::config_ensure ? {
+    'absent' => 'absent',
+    default  => $kapacitor::task_dir_manage,
+  },
   String $task_snapshot_interval = $kapacitor::task_snapshot_interval,
   Stdlib::Absolutepath $storage_boltdb = $kapacitor::storage_boltdb,
-  Enum['present', 'absent'] $storage_boltdb_manage = $kapacitor::storage_boltdb_manage,
+  Enum['present', 'absent'] $storage_boltdb_manage = $kapacitor::config_ensure ? {
+    'absent' => 'absent',
+    default  => $kapacitor::storage_boltdb_manage,
+  },
   String $user = $kapacitor::user,
   String $group = $kapacitor::group,
   Hash $configuration_http = $kapacitor::configuration_http,
@@ -87,6 +105,11 @@ class kapacitor::config (
     default  => 'present'
   }
 
+  $service_definition_ensure = $config_ensure ? {
+    'absent' => 'absent',
+    default  => 'present'
+  }
+
   file { $configuration_path:
     ensure => $directory_ensure,
     force  => true,
@@ -112,10 +135,7 @@ class kapacitor::config (
   }
 
   -> file { $service_definition:
-    ensure  => $config_ensure ? {
-      'absent' => 'absent',
-      default  => 'present'
-    },
+    ensure  => $service_definition_ensure,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
@@ -123,10 +143,7 @@ class kapacitor::config (
   }
 
   file { $data_dir:
-    ensure => $config_ensure ? {
-      'absent' => 'absent',
-      default  => $data_dir_manage
-    },
+    ensure => $data_dir_manage,
     force  => true,
     owner  => $user,
     group  => $group,
@@ -134,20 +151,14 @@ class kapacitor::config (
   }
 
   file { $logging_file:
-    ensure => $config_ensure ? {
-      'absent' => 'absent',
-      default  => $logging_file_manage
-    },
+    ensure => $logging_file_manage,
     owner  => $user,
     group  => $group,
     mode   => '0755',
   }
 
   file { $load_dir:
-    ensure => $config_ensure ? {
-      'absent' => 'absent',
-      default  => $load_dir_manage
-    },
+    ensure => $load_dir_manage,
     force  => true,
     owner  => 'root',
     group  => 'root',
@@ -155,10 +166,7 @@ class kapacitor::config (
   }
 
   file { $replay_dir:
-    ensure => $config_ensure ? {
-      'absent' => 'absent',
-      default  => $replay_dir_manage
-    },
+    ensure => $replay_dir_manage,
     force  => true,
     owner  => $user,
     group  => $group,
@@ -166,10 +174,7 @@ class kapacitor::config (
   }
 
   file { $task_dir:
-    ensure => $config_ensure ? {
-      'absent' => 'absent',
-      default  => $task_dir_manage
-    },
+    ensure => $task_dir_manage,
     force  => true,
     owner  => $user,
     group  => $group,
@@ -177,10 +182,7 @@ class kapacitor::config (
   }
 
   file { $storage_boltdb:
-    ensure => $config_ensure ? {
-      'absent' => 'absent',
-      default  => $storage_boltdb_manage
-    },
+    ensure => $storage_boltdb_manage,
     owner  => $user,
     group  => $group,
     mode   => '0755',
