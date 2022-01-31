@@ -43,7 +43,16 @@ Default configuration
 
 ### Setup Requirements
 
-This module requires the toml-rb gem. Add the gem eg. to the Gemfile.
+This module **requires** the [toml-rb](https://github.com/eMancu/toml-rb) gem. Either install the gem using puppet's native gem provider, [puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/puppetserver_gem), [pe_gem](https://forge.puppetlabs.com/puppetlabs/pe_gem), [pe_puppetserver_gem](https://forge.puppetlabs.com/puppetlabs/pe_puppetserver_gem), or manually using one of the following methods:
+```
+  # apply or puppet-master
+  gem install toml-rb
+  # PE apply
+  /opt/puppetlabs/puppet/bin/gem install toml-rb
+  # AIO or PE puppetserver
+  /opt/puppet/bin/puppetserver gem install toml-rb
+```
+
 For an extensive list of requirements, see `metadata.json`.
 
 ### Beginning with kapacitor
